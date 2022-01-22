@@ -1,5 +1,7 @@
+const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 const port = process.env.PORT || 3000
 
@@ -7,9 +9,10 @@ module.exports = {
   mode: 'development',
   entry: './src/index.jsx',
   output: {
-    filename: 'bundle.[hash].js',
+    path: path.resolve(__dirname, 'build'),
+    filename: '[name].[hash].chunk.js',
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -46,5 +49,25 @@ module.exports = {
     port: port,
     historyApiFallback: true,
     open: true,
+  },
+  optimization: {
+    minimize: true,
+    splitChunks: {
+      cacheGroups: {
+        reactQuillVendor: {
+          test: /[\\/]node_modules[\\/](react-quill)[\\/]/,
+          name: 'reactQuillVendor',
+        },
+        vendor: {
+          test: /[\\/]node_modules[\\/](!react-quill)[\\/]/,
+          name: 'otherVendors',
+        },
+      },
+    },
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+      }),
+    ],
   },
 }
