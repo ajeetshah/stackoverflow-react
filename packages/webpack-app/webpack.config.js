@@ -10,7 +10,7 @@ module.exports = {
   entry: './src/index.jsx',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: '[name].[hash].chunk.js',
+    filename: '[hash].js',
   },
   devtool: 'source-map',
   module: {
@@ -55,12 +55,12 @@ module.exports = {
     splitChunks: {
       cacheGroups: {
         reactQuillVendor: {
-          test: /[\\/]node_modules[\\/](react-quill)[\\/]/,
+          test: /[\\/]node_modules[\\/](quill|react-quill)[\\/]/,
           name: 'reactQuillVendor',
         },
         vendor: {
-          test: /[\\/]node_modules[\\/](!react-quill)[\\/]/,
-          name: 'otherVendors',
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
         },
       },
     },
