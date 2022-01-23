@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react'
+import axios from 'axios'
+import { lazy, Suspense, useEffect } from 'react'
 import Comp1 from './components/Comp1'
 import Comp2 from './components/Comp2'
 
@@ -9,6 +10,13 @@ const Comp1Lazy = lazy(() => import(`${n1}`))
 const Comp2Lazy = lazy(() => import(n2 + ''))
 
 function App() {
+  useEffect(() => {
+    axios.post('/v1/users/login', {
+      username: 'username',
+      password: 'password',
+    })
+  }, [])
+
   return (
     <div className="App">
       <Suspense fallback="loading ...">
