@@ -13,8 +13,11 @@ import { showSuccessToast } from '../../utils/toastUtil'
 import { copyInputTextToClipboard } from '../../utils/commonUtils'
 import { ICar } from './iHome'
 import useDocumentTitle from '../../hooks/useDocumentTitle'
+import axios from 'axios'
 
 export default function HomeContainer() {
+  axios.get('https://quotesland-apis.herokuapp.com/v1/quotes/quote-of-the-day')
+
   useDocumentTitle('Home')
   const { formatMessage } = useIntl()
   const dispatch: any = useDispatch()
